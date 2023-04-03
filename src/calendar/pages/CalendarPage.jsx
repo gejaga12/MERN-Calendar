@@ -1,27 +1,14 @@
 import { useState } from "react";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { addHours } from "date-fns";
 import { NavBar, CalendarEvent, CalendarModal } from "../";
 import { localizer, getMessagesES } from "../../helpers";
-import { useUiStore } from '../../hooks';
+import { useUiStore, useCalendarStore } from '../../hooks';
 
-const events = [
-  {
-    title: "Programar en JavaScript",
-    notes: "Siempre con TypeScript",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: "#fafafa",
-    user: {
-      _id: "1",
-      name: "Gerardo",
-    },
-  },
-];
 
 export const CalendarPage = () => {
   const {openDateModal} = useUiStore();
+  const { events, setActiveEvent } = useCalendarStore();
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
@@ -43,6 +30,7 @@ export const CalendarPage = () => {
 
   const onSelect = (event) => {
     console.log({ click: event });
+    setActiveEvent( event )
   };
 
   const onViewChange = (event) => {
