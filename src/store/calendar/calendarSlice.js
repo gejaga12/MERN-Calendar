@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { addHours } from 'date-fns';
 
 const tempEvent =
-{   
+{
     _id: new Date().getTime(),
     title: "Programar en JavaScript",
     notes: "Siempre con TypeScript",
@@ -23,10 +23,9 @@ export const calendarSlice = createSlice({
 
     },
     reducers: {
-        onSaveActiveEvent: ( state, { payload } ) => {
-                state.activeEvent = payload;
+        onSaveActiveEvent: (state, { payload }) => {
+            state.activeEvent = payload;
         }
-
     }
 });
 

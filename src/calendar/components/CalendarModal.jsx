@@ -40,14 +40,12 @@ export const CalendarModal = () => {
     return formValue.title.length > 0 ? "" : "is-invalid";
   }, [formValue.title, formSubmitted]);
 
-
   useEffect(() => {
       if ( activeEvent !== null ) {
        setFormValue({ ...activeEvent }) 
       }
   }, [activeEvent])
   
-
   const onInputChange = ({ target }) => {
     setFormValue({
       ...formValue,
