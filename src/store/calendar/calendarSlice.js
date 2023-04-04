@@ -25,9 +25,27 @@ export const calendarSlice = createSlice({
     reducers: {
         onSaveActiveEvent: (state, { payload }) => {
             state.activeEvent = payload;
+        },
+        onAddNewEvent: (state, { payload }) => {
+            state.events.push(payload);   /* Incertamos mediante el push el payload */
+            state.activeEvent = null      /* Limpio la nota activa */
+        },
+        onUpdateEvent: (state, { payload }) => {
+            state.events = state.events.map(event => {
+                if (event._id === payload._id) {
+                    return payload;
+                }
+                return event;
+            })
+        },
+        onDeleteEvent: (state) => {
+            if (state.activeEvent) {
+                state.events = state.events.filter(event => event._id !== state.activeEvent._id)
+                state.activeEvent = null;
+            }
         }
     }
 });
 
-export const { onSaveActiveEvent } = calendarSlice.actions
+export const { onSaveActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } = calendarSlice.actions
 
