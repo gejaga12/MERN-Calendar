@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { calendarApi } from '../api';
-import { onChecking, onLogin, onLogout, clearErrorMessage } from '../store';
+import { onChecking, onLogin, onLogout, clearErrorMessage, onLogoutCalendar } from '../store';
 
 export const useAuthStore = () => {
 
@@ -53,7 +53,7 @@ export const useAuthStore = () => {
         const token = localStorage.getItem('token');
         if (!token) return dispatch(onLogout());
         try {
-            const { data } = calendarApi.get('auth/renew');
+            const { data } = await calendarApi.get('auth/renew');
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime(), data.token);
             dispatch(onLogin({ name: data.name, uid: data.uid }))
@@ -65,6 +65,7 @@ export const useAuthStore = () => {
 
     const startLogout = () => {
         localStorage.clear();
+        dispatch(onLogoutCalendar());
         dispatch(onLogout());
     }
 
