@@ -17,16 +17,15 @@ export const CalendarPage = () => {
   const { openDateModal } = useUiStore();
   const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState(
-    localStorage.getItem("lastView") || "week"
+    localStorage.getItem("lastView") || "month"
   );
 
   const eventStyleEvent = (event, start, end, isSelected) => {
-    
     const isMyEvent =
       user.uid === event.user._id || user.uid === event.user.uid;
 
     const style = {
-      backgroundColor: isMyEvent ? "#347CF7" : '#465660',
+      backgroundColor: isMyEvent ? "green" : '#465660',
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
@@ -52,6 +51,12 @@ export const CalendarPage = () => {
     startLoadingEvents();
   }, []);
 
+  // Filtrar los eventos para mostrar solo los eventos del usuario actual
+  const filteredEvents = events.filter(
+    (event) => event.user._id === user.uid || event.user.uid === user.uid
+  );
+
+
   return (
     <>
       <NavBar />
@@ -59,7 +64,7 @@ export const CalendarPage = () => {
         className="mx-2"
         culture="es"
         localizer={localizer}
-        events={events}
+        events={filteredEvents}
         defaultView={lastView}
         startAccessor="start"
         endAccessor="end"
